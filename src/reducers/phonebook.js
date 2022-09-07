@@ -27,7 +27,7 @@ const getSavedContacts = createAsyncThunk(
 const addContact = createAsyncThunk(ADD_CONTACT, async (user) => {
   const response = await postDBContact(user)
 
-  return response
+  return response.data
 })
 const removeContact = createAction(REMOVE_CONTACT)
 const setContacts = createAction(SET_CONTACTS)

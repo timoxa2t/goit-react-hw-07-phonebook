@@ -15,14 +15,14 @@ export const App = () =>  {
 
   const dispatch = useDispatch()
 
-  const handleAddContact = ({name, number}) => {
+  const handleAddContact = ({name, phone}) => {
 
     if(contacts.find(item => item.name === name)){
       alert(name + " is already in contacts")
       return false
     }
     
-    dispatch(addContact({name, number, id: nanoid()}))
+    dispatch(addContact({name, phone, id: nanoid(), createdAt: Date()}))
 
     return true
   }
