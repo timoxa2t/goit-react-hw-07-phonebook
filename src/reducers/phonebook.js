@@ -8,34 +8,34 @@ const SET_CONTACTS = "set_contacts"
 const GET_CONTACTS = "get_contact"
 const SET_FILTER = "set_filter"
 
+const inititalState = {
+  contacts: {
+    items: [],
+    filter: ''
+  }
+}
 
 
 const getSavedContacts = createAsyncThunk(
     GET_CONTACTS,
     async () => {
-      console.log("getSavedContacts")
       const response = await getDBContacts()
-      console.log(response)
       return response
     }
   )
 
+const addContact = createAsyncThunk(ADD_CONTACT, async (user) => {
+  const response = await postDBContact(user)
 
-const inititalState = {
-    contacts: {
-      items: [],
-      filter: ''
-    }
-  }
-
-const addContact = createAction(ADD_CONTACT)
+  return response
+})
 const removeContact = createAction(REMOVE_CONTACT)
 const setContacts = createAction(SET_CONTACTS)
 const setFilter = createAction(SET_FILTER)
 
 
 const contactsReducer = createReducer(inititalState, {
-    [addContact]: (state, {payload}) => {state.items.push(payload); postDBContact(payload)},
+    [addContact.fulfilled]: (state, {payload}) => {state.items.push(payload)},
     [removeContact]: (state, {payload}) => {state.items = state.items.filter(item => item.id !== payload); deleteDBContact(payload)},
     [setContacts]: (state, {payload}) => {state.items = payload},
     [setFilter]: (state, {payload}) => {state.filter = payload},
